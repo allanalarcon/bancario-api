@@ -52,7 +52,7 @@ public class ClientServiceImpl implements ClientService {
 	public ClientDto update(Long id, ClientDto clientDto) {
 		Client client = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found: " + id));
 
-		if (!clientDto.getDni().equals(client.getDni())) {
+		if (clientDto.getDni() != null) {
 			throw(new BadRequestException("Cannot change DNI"));
 		}
 		if (clientDto.getPassword() != null) {

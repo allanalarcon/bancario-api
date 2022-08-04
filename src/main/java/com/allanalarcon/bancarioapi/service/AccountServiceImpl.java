@@ -57,16 +57,16 @@ public class AccountServiceImpl implements AccountService {
 	public AccountDto update(Long id, AccountDto accountDto) {
 		Account account = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account not found: " + id));
 
-		if (!accountDto.getNumber().equals(account.getNumber())) {
+		if (accountDto.getNumber() != null) {
 			throw(new BadRequestException("Cannot change Number"));
 		}
 		if (accountDto.getClient() != null) {
 			throw(new BadRequestException("Cannot change Client"));
 		}
-		if (accountDto.getAmountInitial() != account.getAmountInitial()) {
+		if (accountDto.getAmountInitial() != 0) {
 			throw(new BadRequestException("Cannot change initial Amount"));
 		}
-		if (!accountDto.getType().equals(account.getType())) {
+		if (accountDto.getType() != null) {
 			throw(new BadRequestException("Cannot change Type"));
 		}
 		if (accountDto.isActive() != account.isActive()) {
