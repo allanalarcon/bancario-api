@@ -13,8 +13,6 @@ public interface TransactionService {
 	public TransactionDto save(Long accountId, TransactionDto transactionDto);
 	public List<TransactionDto> findAll();
 	public TransactionDto findById(Long id);
-	public TransactionDto update(Long id, TransactionDto transactionDto);
-	public void deleteById(Long id);
 	public TransactionDto findLastByAccountId(Long accountId);
 	public List<ReportDto> findAllByAccountClientIdAndDateBetween(Long clientId, @Param("dateTransactionStart") Date dateTransactionStart, @Param("dateTransactionEnd") Date dateTransactionEnd);
 	public List<TransactionDto> findByAccountClientNameContainingIgnoreCase(String name);

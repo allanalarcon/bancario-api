@@ -67,18 +67,6 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public TransactionDto update(Long id, TransactionDto transactionDto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteById(Long id) {
-		transactionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Transaction not found: " + id));
-		transactionRepository.deleteById(id);
-	}
-
-	@Override
 	public TransactionDto findLastByAccountId(Long accountId) {
 		Transaction transaction = transactionRepository.findTopByAccountIdOrderByIdDesc(accountId);
 		return transaction == null ? null : transactionMapper.toDto(transaction);

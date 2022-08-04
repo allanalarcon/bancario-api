@@ -51,6 +51,17 @@ public class InitialData implements CommandLineRunner {
 		client2.setActive(true);
 		clientRepository.save(client2);
 
+		Client client3 = new Client();
+		client3.setDni("0999999991");
+		client3.setName("Manuel");
+		client3.setGender("M");
+		client3.setAge(26);
+		client3.setAddress("Gye");
+		client3.setPhone("0999999999");
+		client3.setPassword("12345");
+		client3.setActive(true);
+		clientRepository.save(client3);
+
 		Account account = new Account();
 		account.setClient(client);
 		account.setNumber("12345");
@@ -66,6 +77,14 @@ public class InitialData implements CommandLineRunner {
 		account2.setAmountInitial(150);
 		account2.setActive(true);
 		accountRepository.save(account2);
+
+		Account account3 = new Account();
+		account3.setClient(client2);
+		account3.setNumber("12340");
+		account3.setType("Corriente");
+		account3.setAmountInitial(150);
+		account3.setActive(true);
+		accountRepository.save(account3);
 
 		Transaction transaction = new Transaction();
 		transaction.setAccount(account);
