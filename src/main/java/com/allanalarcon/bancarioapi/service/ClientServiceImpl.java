@@ -52,7 +52,7 @@ public class ClientServiceImpl implements ClientService {
 	public ClientDto update(Long id, ClientDto clientDto) {
 		Client client = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found: " + id));
 
-		if (clientDto.getDni() != null) {
+		if (!clientDto.getDni().equals(client.getDni())) {
 			throw(new BadRequestException("Cannot change DNI"));
 		}
 		if (clientDto.getPassword() != null) {
@@ -85,6 +85,14 @@ public class ClientServiceImpl implements ClientService {
 	public void deleteById(Long id) {
 		clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found" + id));
 		clientRepository.deleteById(id);
+	}
+
+	@Override
+	public List<ClientDto> findByNameContaining(String name) {
+		List<Client> clients = clientRepository.findByNameContainingIgnoreCase(name);
+		return clients.stream()
+				.map(client -> clientMapper.toDto(client))
+				.collect(Collectors.toList());
 	}
 
 }

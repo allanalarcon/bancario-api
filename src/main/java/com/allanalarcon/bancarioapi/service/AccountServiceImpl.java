@@ -57,16 +57,16 @@ public class AccountServiceImpl implements AccountService {
 	public AccountDto update(Long id, AccountDto accountDto) {
 		Account account = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account not found: " + id));
 
-		if (accountDto.getNumber() != 0) {
+		if (!accountDto.getNumber().equals(account.getNumber())) {
 			throw(new BadRequestException("Cannot change Number"));
 		}
 		if (accountDto.getClient() != null) {
 			throw(new BadRequestException("Cannot change Client"));
 		}
-		if (accountDto.getAmountInitial() != 0) {
+		if (accountDto.getAmountInitial() != account.getAmountInitial()) {
 			throw(new BadRequestException("Cannot change initial Amount"));
 		}
-		if (accountDto.getType() != null) {
+		if (!accountDto.getType().equals(account.getType())) {
 			throw(new BadRequestException("Cannot change Type"));
 		}
 		if (accountDto.isActive() != account.isActive()) {
@@ -81,6 +81,14 @@ public class AccountServiceImpl implements AccountService {
 	public void deleteById(Long id) {
 		accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account not found: " + id));
 		accountRepository.deleteById(id);
+	}
+
+	@Override
+	public List<AccountDto> findByNumberContaining(String number) {
+		List<Account> accounts = accountRepository.findByNumberContaining(number);
+		return accounts.stream()
+				.map(account -> accountMapper.toDto(account))
+				.collect(Collectors.toList());
 	}
 
 }

@@ -17,4 +17,5 @@ public interface TransactionService {
 	public void deleteById(Long id);
 	public TransactionDto findLastByAccountId(Long accountId);
 	public List<ReportDto> findAllByAccountClientIdAndDateBetween(Long clientId, @Param("dateTransactionStart") Date dateTransactionStart, @Param("dateTransactionEnd") Date dateTransactionEnd);
+	public List<TransactionDto> findByAccountClientNameContainingIgnoreCase(String name);
 }

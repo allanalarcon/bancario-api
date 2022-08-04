@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ import com.allanalarcon.bancarioapi.utils.ReportPdf;
 
 @RestController
 @RequestMapping("api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TransactionController {
 
 	private final TransactionService transactionService;
@@ -46,8 +48,8 @@ public class TransactionController {
 
 	@GetMapping("/transactions")
 	@ResponseStatus(HttpStatus.OK)
-	public List<TransactionDto> list(){
-		return transactionService.findAll();
+	public List<TransactionDto> list(@RequestParam(required = false) String name){
+		return name == null ? transactionService.findAll() : transactionService.findByAccountClientNameContainingIgnoreCase(name);
 	}
 
 	@GetMapping("/transactions/{id}")
@@ -66,7 +68,7 @@ public class TransactionController {
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<InputStreamResource> reportPDF(@PathVariable Long clientId, @RequestParam String dateTransactionStart, @RequestParam String dateTransactionEnd) throws ParseException{
 		List<ReportDto> transactions = transactionService.findAllByAccountClientIdAndDateBetween(clientId, new SimpleDateFormat("yyyy-MM-dd").parse(dateTransactionStart), new SimpleDateFormat("yyyy-MM-dd").parse(dateTransactionEnd));
-		System.out.println(transactions);
+
 		ByteArrayInputStream pdf = ReportPdf.transactionsReport(transactions);
 
         var headers = new HttpHeaders();

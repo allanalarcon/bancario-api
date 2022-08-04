@@ -14,4 +14,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
 	public Transaction findTopByAccountIdOrderByIdDesc(Long accountId);
 	public List<Transaction> findAllByAccountClientIdAndDateBetween(Long clientId, @Param("dateTransactionStart") Date dateTransactionStart, @Param("dateTransactionEnd") Date dateTransactionEnd);
+	public List<Transaction> findByAccountClientNameContainingIgnoreCase(String name);
 }

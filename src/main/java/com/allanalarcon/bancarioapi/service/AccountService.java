@@ -11,4 +11,5 @@ public interface AccountService {
 	public AccountDto findById(Long id);
 	public AccountDto update(Long id, AccountDto accountDto);
 	public void deleteById(Long id);
+	public List<AccountDto> findByNumberContaining(String number);
 }

@@ -11,4 +11,5 @@ public interface ClientService {
 	public ClientDto findById(Long id);
 	public ClientDto update(Long id, ClientDto clientDto);
 	public void deleteById(Long id);
+	public List<ClientDto> findByNameContaining(String name);
 }

@@ -93,4 +93,12 @@ public class TransactionServiceImpl implements TransactionService {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public List<TransactionDto> findByAccountClientNameContainingIgnoreCase(String name) {
+		List<Transaction> transactions = transactionRepository.findByAccountClientNameContainingIgnoreCase(name);
+		return transactions.stream()
+				.map(transaction -> transactionMapper.toDto(transaction))
+				.collect(Collectors.toList());
+	}
+
 }

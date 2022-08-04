@@ -6,8 +6,6 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Range;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,9 +25,8 @@ public class Account extends Base {
 	private Client client;
 
 	@Column(unique=true)
-	@NotNull(message= "Number account is mandatory")
-	@Range(min = 1, message="Number account is mandatory")
-	private int number;
+	@NotBlank(message = "Number account is mandatory")
+	private String number;
 
 	@NotBlank(message = "Type is mandatory")
 	private String type;

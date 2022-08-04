@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                 .collect(Collectors.toList());
         body.put("errors", errors);
 	    return new ResponseEntity<Object>(body, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<Object> handleDataIntegrityViolation(Exception exception, WebRequest request) {
+		return new ResponseEntity<Object>(errorBody(exception.getCause().toString()), new HttpHeaders(), HttpStatus.BAD_REQUEST);
 	}
 
 	private Map<String, Object> errorBody(String error) {

@@ -9,7 +9,7 @@ public class ReportDto {
 
 	private Date date;
 	private String client;
-	private int accountNumber;
+	private String accountNumber;
 	private String accountType;
 	private double amountInitial;
 	private boolean isActive;
